@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+<context:component-scan base-package="polymorphism"></context:component-scan>
+
+
+<!-- <bean id = "tv" class="polymorphism.SamsungTV" init-method="initmethod" destroy-method="destroymethod" scope="singleton" p:value ="270000" p:spe-ref="spe">
+<property name="list">
+<list>
+<value>서울시 강남구 역삼동</value> 
+
+<value>서울시 성동구 행당동</value>
+</list>
+</property> 
+<property name="set">
+<set >
+<value>ㅎ2</value>
+<value>ㅂ2</value>
+<value>ㄱ2</value>
+</set>
+</property>
+</bean>
+
+<bean id="spe" class="polymorphism.Speker"></bean>
+<bean id = "dog" class="polymorphism.Dongle"> 
+<property name="name" value="동글이"></property>
+<property name="age" value="12"></property>
+<property name="pretty" value="true"></property>
+</bean> -->
+</beans>
