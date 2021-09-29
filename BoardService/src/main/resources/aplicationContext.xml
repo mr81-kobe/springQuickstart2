@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+
+	<context:component-scan base-package="com.mr81.biz.*"></context:component-scan>
+	
+	<context:property-placeholder location="classpath:config/database.properties"/> 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	
+	
+	
+	<property name="driverClassName" value="${jdbc.driver}"></property>
+	<property name="url" value="${jdbc.url}"></property>
+	<property name="username" value="${jdbc.username}"></property>
+	<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+<bean id="log" class="com.mr81.biz.common.LogAdvice"></bean> 
+
+
+<aop:config>
+<aop:pointcut expression="execution (* com.mr81.biz.user..*Impl.*(..))" id="allpointCut"/> 
+<aop:aspect ref="log">
+
+<aop:before pointcut-ref="allpointCut" method="printLog"/>
+</aop:aspect>
+</aop:config>
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+<property name="dataSource" ref="dataSource"></property>
+
+</bean> 
+
+<bean id="beforelog" class="com.mr81.biz.common.BeforeAdvice"></bean>
+<bean id="afterLog" class="com.mr81.biz.common.AfterAdvice"></bean>
+<bean id="exceptionLog" class="com.mr81.biz.common.AfterThrowingAdvice"></bean>
+<aop:config >
+<aop:pointcut expression="execution (* com.mr81.biz.user..*Impl.*(..))" id="beforepointcut"/> 
+<aop:pointcut expression="execution (* com.mr81.biz.user..*Impl.*(..))" id="afterpointcut"/>
+<aop:pointcut expression="execution (* com.mr81.biz.board..*Impl.*(..))" id="exceptionpointcut"/>
+<aop:aspect ref="beforelog">
+<aop:before method="beforeLog" pointcut-ref="beforepointcut"/> 
+
+</aop:aspect> 
+
+<aop:aspect ref="afterLog">
+<aop:after method="afterAdvice" pointcut-ref="afterpointcut"/>
+</aop:aspect>
+<aop:aspect ref="exceptionLog" > 
+<aop:after-throwing method="exceptionLog" pointcut-ref="exceptionpointcut"/>
+</aop:aspect>
+</aop:config>
+
+
+
+
+</beans>
