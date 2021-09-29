@@ -17,7 +17,6 @@ public class BoardServiceImpl implements BoardService {
 	public BoardServiceImpl() {
 		// TODO Auto-generated constructor stub
 		
-		
 	}
 
 	@Override
